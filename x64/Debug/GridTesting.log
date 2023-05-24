@@ -1,6 +1,4 @@
 ﻿  GameManager.cpp
-C:\Users\s220058\Desktop\sample_A\GridTesting\GridTesting\GameManager.cpp(66,31): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\s220058\Desktop\sample_A\GridTesting\GridTesting\GameManager.cpp(66,20): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-  main.cpp
-  Generating Code...
+C:\Users\s220058\Desktop\sample_A\GridTesting\GridTesting\GameManager.cpp(74,31): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\s220058\Desktop\sample_A\GridTesting\GridTesting\GameManager.cpp(74,20): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   GridTesting.vcxproj -> C:\Users\s220058\Desktop\sample_A\GridTesting\x64\Debug\GridTesting.exe

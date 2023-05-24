@@ -1,5 +1,7 @@
 #include "GameManager.h"
 #include "raylib.h"
+#include <iostream>
+using namespace std;
 
 GameManager::GameManager()
 {
@@ -29,6 +31,12 @@ void GameManager::Start()
 void GameManager::Initialize()
 {
 	playerPos = { startPos.x, startPos.y };
+	cout << sizeof(objects) / sizeof(BarricadeObj) << endl;
+	for (size_t i = 0; i < sizeof(objects) / sizeof(BarricadeObj); i++)
+	{
+		objects[i].Initialize();
+		objects[i].setPosition({startPos.x + (6 * i), startPos.y});
+	}
 }
 
 void GameManager::Destroy()
@@ -64,6 +72,11 @@ void GameManager::Update(float deltaTime)
 	ClearBackground(BLACK);
 
 	DrawCircle(lerpPos.x, lerpPos.y, 3, RAYWHITE);
+
+	for (size_t i = 0; i < sizeof(objects) / sizeof(BarricadeObj); i++)
+	{
+		objects[i].Draw();
+	}
 
 	EndDrawing();
 
