@@ -1,6 +1,16 @@
 #include "GameManager.h"
 #include "raylib.h"
 
+GameManager::GameManager()
+{
+
+}
+
+GameManager::~GameManager()
+{
+
+}
+
 void GameManager::Start()
 {
 	InitWindow(gameWidth, gameHeight, "Space Invaders");
@@ -18,7 +28,7 @@ void GameManager::Start()
 
 void GameManager::Initialize()
 {
-
+	playerPos = { startPos.x, startPos.y };
 }
 
 void GameManager::Destroy()
@@ -26,6 +36,10 @@ void GameManager::Destroy()
 
 }
 
+float GameManager::lerp(float a, float b, float t)
+{
+	return a + (b - a) * t;
+}
 void GameManager::Update(float deltaTime)
 {
 	// BEGIN UPDATE // 
@@ -35,6 +49,13 @@ void GameManager::Update(float deltaTime)
 		playerPos.x -= force * deltaTime;
 	}
 
+	if (IsKeyDown(KEY_RIGHT))
+	{
+		playerPos.x += force * deltaTime;
+	}
+
+	lerpPos = { lerp(lerpPos.x, playerPos.x, deltaTime * 4), lerp(lerpPos.y, playerPos.y, deltaTime * 4) };
+
 	// END UPDATE //
 
 	// BEGIN DRAWING //
@@ -42,7 +63,7 @@ void GameManager::Update(float deltaTime)
 	BeginDrawing();
 	ClearBackground(BLACK);
 
-	DrawCircle(playerPos.x, playerPos.y, 3, RAYWHITE);
+	DrawCircle(lerpPos.x, lerpPos.y, 3, RAYWHITE);
 
 	EndDrawing();
 

@@ -1,4 +1,6 @@
-﻿LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-main.obj : error LNK2019: unresolved external symbol "public: __cdecl GameManager::GameManager(void)" (??0GameManager@@QEAA@XZ) referenced in function main
-main.obj : error LNK2019: unresolved external symbol "public: __cdecl GameManager::~GameManager(void)" (??1GameManager@@QEAA@XZ) referenced in function main
-C:\Users\s220058\Desktop\sample_A\GridTesting\x64\Debug\GridTesting.exe : fatal error LNK1120: 2 unresolved externals
+﻿  GameManager.cpp
+C:\Users\s220058\Desktop\sample_A\GridTesting\GridTesting\GameManager.cpp(66,31): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\s220058\Desktop\sample_A\GridTesting\GridTesting\GameManager.cpp(66,20): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  main.cpp
+  Generating Code...
+  GridTesting.vcxproj -> C:\Users\s220058\Desktop\sample_A\GridTesting\x64\Debug\GridTesting.exe
