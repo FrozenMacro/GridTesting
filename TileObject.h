@@ -1,7 +1,7 @@
 #pragma once
 
 #include "raylib.h"
-class BarricadeObj
+class TileObject
 {
 public:
 	//void Update(float deltaTime);
@@ -9,12 +9,11 @@ public:
 	void Draw();
 	void Initialize();
 	void setPosition(Vector2 pos);
+	int blockType; // 0 - 4
 private:
 	Texture texture;
 	Rectangle frameRec;
 	Vector2 position;
-	int blockType; // 0 - 4
-	int hit;
-	int previousHit;
+	int hit = 0;
 };
 

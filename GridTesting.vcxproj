@@ -127,7 +127,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BarricadeObj.cpp" />
+    <ClCompile Include="Barricade.cpp" />
+    <ClCompile Include="TileObject.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -135,7 +136,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BarricadeObj.h" />
+    <ClInclude Include="Barricade.h" />
+    <ClInclude Include="TileObject.h" />
     <ClInclude Include="GameManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,7 +1,8 @@
 #pragma once
 
 #include "raylib.h"
-#include "BarricadeObj.h"
+#include "TileObject.h"
+#include "Barricade.h"
 class GameManager
 {
 public:
@@ -12,7 +13,8 @@ public:
 	void Start();
 	Vector2 startPos = {200, 400};
 	int force = 150;
-	BarricadeObj objects[4];
+	//TileObject objects[4];
+	Barricade obj;
 private:
 	void Update(float deltaTime);
 	void Draw();

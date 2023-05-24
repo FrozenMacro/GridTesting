@@ -31,12 +31,18 @@ void GameManager::Start()
 void GameManager::Initialize()
 {
 	playerPos = { startPos.x, startPos.y };
-	cout << sizeof(objects) / sizeof(BarricadeObj) << endl;
-	for (size_t i = 0; i < sizeof(objects) / sizeof(BarricadeObj); i++)
+	//cout << sizeof(objects) / sizeof(TileObject) << endl;
+
+	obj.setPosition({200, 250});
+	obj.Intialize();
+
+	/*for (size_t i = 0; i < sizeof(objects) / sizeof(TileObject); i++)
 	{
 		objects[i].Initialize();
 		objects[i].setPosition({startPos.x + (6 * i), startPos.y});
-	}
+		std::cout << i << std::endl;
+		objects[i].blockType = i;
+	}*/
 }
 
 void GameManager::Destroy()
@@ -73,10 +79,11 @@ void GameManager::Update(float deltaTime)
 
 	DrawCircle(lerpPos.x, lerpPos.y, 3, RAYWHITE);
 
-	for (size_t i = 0; i < sizeof(objects) / sizeof(BarricadeObj); i++)
+	obj.Draw();
+	/*for (size_t i = 0; i < sizeof(objects) / sizeof(TileObject); i++)
 	{
 		objects[i].Draw();
-	}
+	}*/
 
 	EndDrawing();
 
