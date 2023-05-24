@@ -31,7 +31,6 @@ void GameManager::Start()
 void GameManager::Initialize()
 {
 	playerPos = { startPos.x, startPos.y };
-	//cout << sizeof(objects) / sizeof(TileObject) << endl;
 
 	obj.setPosition({200, 250});
 	obj.Intialize();
@@ -66,6 +65,11 @@ void GameManager::Update(float deltaTime)
 	if (IsKeyDown(KEY_RIGHT))
 	{
 		playerPos.x += force * deltaTime;
+	}
+
+	if (IsKeyDown())
+	{
+		Bullet
 	}
 
 	lerpPos = { lerp(lerpPos.x, playerPos.x, deltaTime * 4), lerp(lerpPos.y, playerPos.y, deltaTime * 4) };

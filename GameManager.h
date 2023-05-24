@@ -3,6 +3,7 @@
 #include "raylib.h"
 #include "TileObject.h"
 #include "Barricade.h"
+#include "Bullet.h"
 class GameManager
 {
 public:
@@ -15,6 +16,7 @@ public:
 	int force = 150;
 	//TileObject objects[4];
 	Barricade obj;
+	Bullet bullets[];
 private:
 	void Update(float deltaTime);
 	void Draw();
