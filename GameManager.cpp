@@ -1,6 +1,7 @@
 #include "GameManager.h"
 #include "raylib.h"
 #include <iostream>
+#include <vector>
 using namespace std;
 
 GameManager::GameManager()
@@ -49,6 +50,11 @@ void GameManager::Destroy()
 
 }
 
+void GameManager::DestroyBullet(Bullet obj) {
+	std::cout << "HIT BLOCK" << std::endl;
+	//bullets.erase(std::remove(bullets.begin(), bullets.end(), obj), bullets.end());
+}
+
 float GameManager::lerp(float a, float b, float t)
 {
 	return a + (b - a) * t;
@@ -67,12 +73,36 @@ void GameManager::Update(float deltaTime)
 		playerPos.x += force * deltaTime;
 	}
 
-	if (IsKeyDown())
+	lerpPos = { lerp(lerpPos.x, playerPos.x, deltaTime * 4), lerp(lerpPos.y, playerPos.y, deltaTime * 4) };
+
+	if (IsKeyDown(KEY_SPACE))
 	{
-		Bullet
+		Bullet bull;
+		bull.Initialize({lerpPos.x, lerpPos.y}, -50);
+		bullets.push_back(bull);
 	}
 
-	lerpPos = { lerp(lerpPos.x, playerPos.x, deltaTime * 4), lerp(lerpPos.y, playerPos.y, deltaTime * 4) };
+	for (size_t i = 0; i < bullets.size(); i++)
+	{
+		Bullet bull = bullets[i];
+		for (size_t x = 0; x < sizeof(obj.objects) / sizeof(TileObject); x++)
+		{
+			TileObject obj2 = obj.objects[x];
+
+			if (bull.Overlapping(obj2.min, obj2.max))
+			{
+				DestroyBullet(bull);
+			}
+		}
+	}
+
+	if (bullets.size() > 0)
+	{
+		for (size_t i = 0; i < bullets.size(); i++)
+		{
+			bullets[i].Update(deltaTime);
+		}
+	}
 
 	// END UPDATE //
 
@@ -88,6 +118,13 @@ void GameManager::Update(float deltaTime)
 	{
 		objects[i].Draw();
 	}*/
+	if (bullets.size() > 0)
+	{
+		for (size_t i = 0; i < bullets.size(); i++)
+		{
+			bullets[i].Draw();
+		}
+	}
 
 	EndDrawing();
 

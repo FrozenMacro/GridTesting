@@ -4,6 +4,7 @@
 #include "TileObject.h"
 #include "Barricade.h"
 #include "Bullet.h"
+#include <vector>
 class GameManager
 {
 public:
@@ -12,11 +13,12 @@ public:
 	~GameManager();
 
 	void Start();
+	void DestroyBullet(Bullet obj);
 	Vector2 startPos = {200, 400};
 	int force = 150;
 	//TileObject objects[4];
 	Barricade obj;
-	Bullet bullets[];
+	std::vector<Bullet> bullets;
 private:
 	void Update(float deltaTime);
 	void Draw();
