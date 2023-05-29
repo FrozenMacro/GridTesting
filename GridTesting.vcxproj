@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="Barricade.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="PlayerSprite.cpp" />
     <ClCompile Include="TileObject.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="main.cpp" />
@@ -136,6 +137,7 @@
   <ItemGroup>
     <ClInclude Include="Barricade.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="PlayerSprite.h" />
     <ClInclude Include="TileObject.h" />
     <ClInclude Include="GameManager.h" />
   </ItemGroup>

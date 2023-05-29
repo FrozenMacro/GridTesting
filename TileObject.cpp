@@ -20,6 +20,6 @@ void TileObject::Draw()
 {
 	frameRec.x = hit * 6;
 	frameRec.y = blockType * 6;
-	Vector2 min = { position.x, position.y }, max = { position.x + frameRec.width, position.y + frameRec.height };
+	min = { position.x, position.y }, max = { position.x + frameRec.width, position.y + frameRec.height };
 	DrawTextureRec(texture, frameRec, position, RAYWHITE);
 }

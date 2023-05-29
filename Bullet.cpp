@@ -21,7 +21,7 @@ bool Bullet::Overlapping(Vector2 o_min, Vector2 o_max)
 
 void Bullet::Draw()
 {
-	min = { position.x - 2, position.y - 2 };
-	max = { position.x + 2, position.y + 2 };
-	DrawCircle(position.x, position.y, 3, GREEN);
+	min = { position.x - 1, position.y - 2 };
+	max = { position.x + 1, position.y + 2 };
+	DrawCircle(position.x, position.y, 1, RAYWHITE);
 }

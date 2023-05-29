@@ -7,7 +7,7 @@ void Barricade::setPosition(Vector2 pos)
 {
 	position = pos;
 
-	for (size_t i = 0; i < sizeof(objects) / sizeof(TileObject); i++)
+	for (size_t i = 0; i < objects.size(); i++)
 	{
 		switch (i)
 		{
@@ -23,33 +23,39 @@ void Barricade::setPosition(Vector2 pos)
 
 void Barricade::Intialize()
 {
-	start_pos = { 200, 250 };
-	for (size_t i = 0; i < sizeof(objects) / sizeof(TileObject); i++)
+	for (size_t i = 0; i < 10; i++)
 	{
+		TileObject obj;
+		obj.blockType = 0;
 		int amount = (i / 4);
-		objects[i].Initialize();
-		objects[i].setPosition({ start_pos.x + (6 * i) - (amount * 6 * 4), start_pos.y + (amount * 6)});
+		obj.Initialize();
+		obj.setPosition({ position.x + (6 * i) - (amount * 6 * 4), position.y + (amount * 6)});
 		switch (i)
 		{
 		case 0:
-			objects[i].blockType = 4;
+			obj.blockType = 4;
 			break;
 		case 3:
-			objects[i].blockType = 1;
-			break;
-		case 10:
-			objects[i].blockType = 3;
+			obj.blockType = 1;
 			break;
 		case 9:
-			objects[i].blockType = 2;
+			obj.position.x += 12;
+			//obj.blockType = 2;
+			break;
+		case 5:
+			obj.blockType = 2;
+			break;
+		case 6:
+			obj.blockType = 3;
 			break;
 		}
+		objects.push_back(obj);
 	}
 }
 
 void Barricade::Draw()
 {
-	for (size_t i = 0; i < sizeof(objects) / sizeof(TileObject); i++)
+	for (size_t i = 0; i < objects.size(); i++)
 	{
 		objects[i].Draw();
 	}

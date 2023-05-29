@@ -31,18 +31,24 @@ void GameManager::Start()
 
 void GameManager::Initialize()
 {
-	playerPos = { startPos.x, startPos.y };
+	player.setPosition(startPos);
+	player.Initialize();
 
-	obj.setPosition({200, 250});
-	obj.Intialize();
-
-	/*for (size_t i = 0; i < sizeof(objects) / sizeof(TileObject); i++)
+	for (size_t i = 0; i < 4; i++)
 	{
-		objects[i].Initialize();
-		objects[i].setPosition({startPos.x + (6 * i), startPos.y});
-		std::cout << i << std::endl;
-		objects[i].blockType = i;
-	}*/
+		Barricade barricade;
+		barricade.position = {(float)((gameWidth / 4) * i) + 40, (float)(gameHeight - 100)};
+		barricade.Intialize();
+		barricades.push_back(barricade);
+	}
+}
+
+void GameManager::DestroyBullet(int index)
+{
+	if (bullets.size() > 0)
+	{
+		bullets.erase(bullets.begin() + index);
+	}
 }
 
 void GameManager::Destroy()
@@ -50,50 +56,45 @@ void GameManager::Destroy()
 
 }
 
-void GameManager::DestroyBullet(Bullet obj) {
-	std::cout << "HIT BLOCK" << std::endl;
-	//bullets.erase(std::remove(bullets.begin(), bullets.end(), obj), bullets.end());
-}
-
-float GameManager::lerp(float a, float b, float t)
-{
-	return a + (b - a) * t;
-}
 void GameManager::Update(float deltaTime)
 {
 	// BEGIN UPDATE // 
 
-	if (IsKeyDown(KEY_LEFT))
-	{
-		playerPos.x -= force * deltaTime;
-	}
-
-	if (IsKeyDown(KEY_RIGHT))
-	{
-		playerPos.x += force * deltaTime;
-	}
-
-	lerpPos = { lerp(lerpPos.x, playerPos.x, deltaTime * 4), lerp(lerpPos.y, playerPos.y, deltaTime * 4) };
-
-	if (IsKeyDown(KEY_SPACE))
-	{
-		Bullet bull;
-		bull.Initialize({lerpPos.x, lerpPos.y}, -50);
-		bullets.push_back(bull);
-	}
+	player.Update(deltaTime);
 
 	for (size_t i = 0; i < bullets.size(); i++)
 	{
 		Bullet bull = bullets[i];
-		for (size_t x = 0; x < sizeof(obj.objects) / sizeof(TileObject); x++)
+		for (size_t y = 0; y < barricades.size(); y++)
 		{
-			TileObject obj2 = obj.objects[x];
-
-			if (bull.Overlapping(obj2.min, obj2.max))
+			for (size_t x = 0; x < barricades[y].objects.size(); x++)
 			{
-				DestroyBullet(bull);
+				TileObject obj2 = barricades[y].objects[x];
+
+				if (bull.Overlapping(obj2.min, obj2.max))
+				{
+					DestroyBullet(i);
+					barricades[y].objects[x].OnHit();
+					break;
+				}
 			}
 		}
+	}
+
+	bool check = false;
+	for (size_t i = 0; i < bullets.size(); i++)
+	{
+		if (bullets[i].type == 1)
+		{
+			check = true;
+		}
+	}
+
+	if (IsKeyDown(KEY_SPACE) && !check)
+	{
+		Bullet bull;
+		bull.Initialize(player.getPosition(), -300);
+		bullets.push_back(bull);
 	}
 
 	if (bullets.size() > 0)
@@ -101,6 +102,23 @@ void GameManager::Update(float deltaTime)
 		for (size_t i = 0; i < bullets.size(); i++)
 		{
 			bullets[i].Update(deltaTime);
+
+			if (bullets[i].position.x <= 0 || bullets[i].position.x >= gameWidth ||
+				bullets[i].position.y <= 0 || bullets[i].position.y >= gameHeight)
+			{
+				DestroyBullet(i);
+			}
+		}
+	}
+
+	for (size_t i = 0; i < barricades.size(); i++)
+	{
+		for (size_t x = 0; x < barricades[i].objects.size(); x++)
+		{
+			if (barricades[i].objects[x].hit >= 4)
+			{
+				barricades[i].objects.erase(barricades[i].objects.begin() + x);
+			}
 		}
 	}
 
@@ -111,13 +129,17 @@ void GameManager::Update(float deltaTime)
 	BeginDrawing();
 	ClearBackground(BLACK);
 
-	DrawCircle(lerpPos.x, lerpPos.y, 3, RAYWHITE);
+	player.Draw();
+	//DrawCircle(lerpPos.x, lerpPos.y, 3, RAYWHITE);
 
-	obj.Draw();
-	/*for (size_t i = 0; i < sizeof(objects) / sizeof(TileObject); i++)
+	if (barricades.size() > 0)
 	{
-		objects[i].Draw();
-	}*/
+		for (size_t i = 0; i < barricades.size(); i++)
+		{
+			barricades[i].Draw();
+		}
+	}
+
 	if (bullets.size() > 0)
 	{
 		for (size_t i = 0; i < bullets.size(); i++)
@@ -125,6 +147,8 @@ void GameManager::Update(float deltaTime)
 			bullets[i].Draw();
 		}
 	}
+
+	DrawText("SCORE: 0", 10, 10, 20,RAYWHITE);
 
 	EndDrawing();
 
