@@ -2,6 +2,8 @@
 #include "raylib.h"
 #include <iostream>
 #include <vector>
+#include <string>
+#include <cstdlib>
 using namespace std;
 
 GameManager::GameManager()
@@ -34,6 +36,10 @@ void GameManager::Initialize()
 	player.setPosition(startPos);
 	player.Initialize();
 
+	//camera = {0};
+	//camera.zoom = 2;
+	//camera.target = { gameWidth / 4.0f, gameHeight / 4.0f };
+
 	for (size_t i = 0; i < 4; i++)
 	{
 		Barricade barricade;
@@ -61,6 +67,7 @@ void GameManager::Update(float deltaTime)
 	// BEGIN UPDATE // 
 
 	player.Update(deltaTime);
+	//camera.target = { player.getPosition().x - gameWidth / 4, player.getPosition().y - gameHeight / 4 };
 
 	for (size_t i = 0; i < bullets.size(); i++)
 	{
@@ -79,6 +86,12 @@ void GameManager::Update(float deltaTime)
 				}
 			}
 		}
+		if (bull.Overlapping(player.min, player.max) && bull.type != 1 && !player.hit) {
+			DestroyBullet(i);
+			lives--;
+			player.OnHit(lives);
+			cout << lives << endl;
+		}	
 	}
 
 	bool check = false;
@@ -88,6 +101,14 @@ void GameManager::Update(float deltaTime)
 		{
 			check = true;
 		}
+	}
+
+	if (IsKeyDown(KEY_E))
+	{
+		Bullet bull;
+		bull.Initialize({ (float)(rand() % gameWidth), 10}, 150);
+		bull.type = 0;
+		bullets.push_back(bull);
 	}
 
 	if (IsKeyDown(KEY_SPACE) && !check)
@@ -129,6 +150,8 @@ void GameManager::Update(float deltaTime)
 	BeginDrawing();
 	ClearBackground(BLACK);
 
+	//BeginMode2D(camera);
+
 	player.Draw();
 	//DrawCircle(lerpPos.x, lerpPos.y, 3, RAYWHITE);
 
@@ -147,9 +170,10 @@ void GameManager::Update(float deltaTime)
 			bullets[i].Draw();
 		}
 	}
-
-	DrawText("SCORE: 0", 10, 10, 20,RAYWHITE);
-
+	string text = "SCORE: " + to_string(score);
+	string livesCounter = "LIVES: " + to_string(lives);
+	DrawText(text.c_str(), 10, 10, 20, RAYWHITE);
+	DrawText(livesCounter.c_str(), 300, 10, 20, RAYWHITE);
 	EndDrawing();
 
 	// END DRAWING //

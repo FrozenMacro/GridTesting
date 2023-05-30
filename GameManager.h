@@ -5,6 +5,7 @@
 #include "Barricade.h"
 #include "Bullet.h"
 #include "PlayerSprite.h"
+#include "EnemyClass.h"
 #include <vector>
 class GameManager
 {
@@ -18,6 +19,8 @@ public:
 
 	Vector2 startPos = {200, 275};
 	PlayerSprite player;
+	Camera2D camera;
+	bool game_running;
 
 	std::vector<Barricade> barricades;
 	std::vector<Bullet> bullets;
@@ -30,4 +33,6 @@ private:
 	float lerp(float a, float b, float t);
 private:
 	int gameWidth = 400, gameHeight = 300;
+	int score = 0;
+	int lives = 3;
 };

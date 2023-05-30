@@ -1,4 +1,5 @@
-﻿  PlayerSprite.cpp
-C:\Users\vorte\source\repos\GridTesting\PlayerSprite.cpp(40,33): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\vorte\source\repos\GridTesting\PlayerSprite.cpp(40,21): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+﻿  GameManager.cpp
+C:\Users\vorte\source\repos\GridTesting\GameManager.cpp(83,21): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\vorte\source\repos\GridTesting\GameManager.cpp(90,19): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\vorte\source\repos\GridTesting\GameManager.cpp(130,20): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
   GridTesting.vcxproj -> C:\Users\vorte\source\repos\GridTesting\x64\Debug\GridTesting.exe
