@@ -1,5 +1,7 @@
 ﻿  GameManager.cpp
-C:\Users\vorte\source\repos\GridTesting\GameManager.cpp(83,21): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\vorte\source\repos\GridTesting\GameManager.cpp(90,19): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\vorte\source\repos\GridTesting\GameManager.cpp(130,20): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\vorte\source\repos\GridTesting\GameManager.cpp(54,20): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\vorte\source\repos\GridTesting\GameManager.cpp(97,21): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\vorte\source\repos\GridTesting\GameManager.cpp(104,19): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\vorte\source\repos\GridTesting\GameManager.cpp(115,21): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\vorte\source\repos\GridTesting\GameManager.cpp(156,20): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
   GridTesting.vcxproj -> C:\Users\vorte\source\repos\GridTesting\x64\Debug\GridTesting.exe

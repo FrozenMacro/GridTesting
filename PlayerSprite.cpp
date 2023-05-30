@@ -61,7 +61,7 @@ void PlayerSprite::Update(float deltaTime) {
 		}
 	}
 
-	position.x = clamp(position.x, 0 + frameRec.width / 2, 400 - frameRec.width / 2);
+	position.x = clamp(position.x, 0 + frameRec.width / 2, 275 - frameRec.width / 2);
 }
 
 void PlayerSprite::Draw(){

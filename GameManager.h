@@ -17,13 +17,14 @@ public:
 	void Start();
 	void DestroyBullet(int index);
 
-	Vector2 startPos = {200, 275};
+	Vector2 startPos = {200, 225};
 	PlayerSprite player;
 	Camera2D camera;
 	bool game_running;
 
 	std::vector<Barricade> barricades;
 	std::vector<Bullet> bullets;
+	std::vector<EnemyClass> enemies;
 private:
 	void Update(float deltaTime);
 	void Draw();
@@ -32,7 +33,7 @@ private:
 	void Destroy();
 	float lerp(float a, float b, float t);
 private:
-	int gameWidth = 400, gameHeight = 300;
+	int gameWidth = 550, gameHeight = 475;
 	int score = 0;
 	int lives = 3;
 };

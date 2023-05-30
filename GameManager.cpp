@@ -18,6 +18,7 @@ GameManager::~GameManager()
 
 void GameManager::Start()
 {
+	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
 	InitWindow(gameWidth, gameHeight, "Space Invaders");
 	SetTargetFPS(60);
 
@@ -36,16 +37,25 @@ void GameManager::Initialize()
 	player.setPosition(startPos);
 	player.Initialize();
 
-	//camera = {0};
-	//camera.zoom = 2;
+	camera = {0};
+	camera.zoom = 2;
 	//camera.target = { gameWidth / 4.0f, gameHeight / 4.0f };
 
 	for (size_t i = 0; i < 4; i++)
 	{
 		Barricade barricade;
-		barricade.position = {(float)((gameWidth / 4) * i) + 40, (float)(gameHeight - 100)};
+		barricade.position = {(float)(70 * i) + 25, (float)(200)};
 		barricade.Intialize();
 		barricades.push_back(barricade);
+	}
+
+	for (size_t i = 0; i < 55; i++)
+	{
+		int line = i / 11;
+		EnemyClass enemy;
+		enemy.setPosition({(float)20 + (20 * (i - (line * 11))), (float)40 + (15 * line)});
+		enemy.Initialize();
+		enemies.push_back(enemy);
 	}
 }
 
@@ -65,6 +75,10 @@ void GameManager::Destroy()
 void GameManager::Update(float deltaTime)
 {
 	// BEGIN UPDATE // 
+
+	if (IsKeyDown(KEY_ENTER)) {
+		ToggleFullscreen();
+	}
 
 	player.Update(deltaTime);
 	//camera.target = { player.getPosition().x - gameWidth / 4, player.getPosition().y - gameHeight / 4 };
@@ -92,6 +106,17 @@ void GameManager::Update(float deltaTime)
 			player.OnHit(lives);
 			cout << lives << endl;
 		}	
+
+		if (bull.type != 0){
+			for (size_t x = 0; x < enemies.size(); x++)
+			{
+				if (bull.Overlapping(enemies[x].min, enemies[x].max)) {
+					score += enemies[x].GetPoints();
+					DestroyBullet(i);
+					enemies.erase(enemies.begin() + x);
+				}
+			}
+		}
 	}
 
 	bool check = false;
@@ -115,6 +140,7 @@ void GameManager::Update(float deltaTime)
 	{
 		Bullet bull;
 		bull.Initialize(player.getPosition(), -300);
+		bull.type = 1;
 		bullets.push_back(bull);
 	}
 
@@ -150,30 +176,30 @@ void GameManager::Update(float deltaTime)
 	BeginDrawing();
 	ClearBackground(BLACK);
 
-	//BeginMode2D(camera);
+	BeginMode2D(camera);
 
 	player.Draw();
 	//DrawCircle(lerpPos.x, lerpPos.y, 3, RAYWHITE);
 
-	if (barricades.size() > 0)
+	for (size_t i = 0; i < barricades.size(); i++)
 	{
-		for (size_t i = 0; i < barricades.size(); i++)
-		{
-			barricades[i].Draw();
-		}
+		barricades[i].Draw();
 	}
 
-	if (bullets.size() > 0)
+	for (size_t i = 0; i < bullets.size(); i++)
 	{
-		for (size_t i = 0; i < bullets.size(); i++)
-		{
-			bullets[i].Draw();
-		}
+		bullets[i].Draw();
 	}
+
+	for (size_t i = 0; i < enemies.size(); i++)
+	{
+		enemies[i].Draw();
+	}
+
 	string text = "SCORE: " + to_string(score);
 	string livesCounter = "LIVES: " + to_string(lives);
-	DrawText(text.c_str(), 10, 10, 20, RAYWHITE);
-	DrawText(livesCounter.c_str(), 300, 10, 20, RAYWHITE);
+	DrawText(text.c_str(), 5, 5, 10, RAYWHITE);
+	DrawText(livesCounter.c_str(), 225 , 5, 10, RAYWHITE);
 	EndDrawing();
 
 	// END DRAWING //

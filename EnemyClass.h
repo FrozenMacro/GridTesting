@@ -4,10 +4,14 @@ class EnemyClass
 {
 public:
 	void Initialize();
-	void Update(float deltaTime, bool running);
+	void Update(float deltaTime);
 	void Draw();
 	void setPosition(Vector2 pos);
+	int GetPoints();
+	int type = 0;
+	Vector2 min, max;
 private:
+	int points;
 	Vector2 position;
 	Texture sprite;
 	Rectangle frameRec;
