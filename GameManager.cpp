@@ -68,7 +68,10 @@ void GameManager::SpawnEnemies() {
 		if (clampedWaves > 4) {
 			clampedWaves = 4;
 		}
-		int line = i / 11;
+		int line = 0;
+		if (i != 0) {
+			line = i / 11;
+		}
 		EnemyClass enemy;
 		switch (line) {
 		case 0:
@@ -188,13 +191,13 @@ void GameManager::Update(float deltaTime)
 			timerActive = false;
 		}
 
-		if (enemy_bt > 0 && !player.hit) {
+		if (enemy_bt > 0 && !player.hit && enemies.size() != 0) {
 			enemy_bt -= deltaTime;
 			enemy_bt_active = true;
 		}
-		else if (enemy_bt <= 0 && enemy_bt_active) {
+		else if (enemy_bt <= 0 && enemy_bt_active && enemies.size() != 0) {
 			enemy_bt_active = false;
-			int enemyPick = rand() % (enemies.size() - 1);
+			int enemyPick = rand() % (enemies.size() - ((enemies.size() > 1) ? 1 : 0));
 			int minTime = (rand() % 10) + 10, maxTime = (rand() % (20 - (waves * 3))) + 10;
 			Bullet bull;
 			bull.Initialize(enemies[enemyPick].GetPosition(), 150);
