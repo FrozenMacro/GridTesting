@@ -15,7 +15,7 @@ public:
 	Vector2 min, max;
 private:
 	int spriteCounter = 0;
-	int points;
+	int points = 0;
 	Vector2 position;
 	Texture sprite;
 	Rectangle frameRec;

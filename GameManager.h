@@ -17,7 +17,7 @@ public:
 	void Start();
 	void DestroyBullet(int index);
 
-	Vector2 startPos = { 200, 225 };
+	Vector2 startPos = { 150, 225 };
 	PlayerSprite player;
 	Camera2D camera;
 	bool game_running;
@@ -39,7 +39,10 @@ private:
 	int score = 0;
 	int lives = 3;
 	int timer = 20;
+	int enemy_bt = 5;//
+	bool enemy_bt_active = false;
 	int waves = 0;
+	int yLevelSpeed = 0;
 	bool timerActive = false;
 	bool oppositeDirection;
 };

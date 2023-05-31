@@ -45,6 +45,7 @@ void PlayerSprite::Update(float deltaTime) {
 		else if(timer <= 0){
 			timer = 0;
 			hit = false;
+			position.x = 150;
 			Initialize();
 		}
 	}
