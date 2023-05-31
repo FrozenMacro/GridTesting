@@ -68,5 +68,5 @@ void PlayerSprite::Draw(){
 	min = { position.x - frameRec.width / 2, position.y - frameRec.height / 2};
 	max = { position.x + frameRec.width / 2, position.y + frameRec.height / 2};
 	DrawTextureRec(texture, frameRec, { position.x - (frameRec.width / 2), position.y - 4}, RAYWHITE);
-	DrawCircle(position.x, position.y, 2, RAYWHITE);
+	//DrawCircle(position.x, position.y, 2, RAYWHITE);
 }

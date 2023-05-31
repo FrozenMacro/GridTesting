@@ -34,6 +34,13 @@ void GameManager::Start()
 
 void GameManager::Initialize()
 {
+	enemies.clear();
+	barricades.clear();
+
+	waves = 0;
+	lives = 3;
+	score = 0;
+
 	player.setPosition(startPos);
 	player.Initialize();
 
@@ -44,16 +51,36 @@ void GameManager::Initialize()
 	for (size_t i = 0; i < 4; i++)
 	{
 		Barricade barricade;
-		barricade.position = {(float)(70 * i) + 25, (float)(200)};
+		barricade.position = {(float)(70 * i) + 25, (float)(185)};
 		barricade.Intialize();
 		barricades.push_back(barricade);
 	}
 
+	SpawnEnemies();
+}
+
+void GameManager::SpawnEnemies() {
+	oppositeDirection = false;
 	for (size_t i = 0; i < 55; i++)
 	{
+		int clampedWaves = waves;
+		if (clampedWaves > 4) {
+			clampedWaves = 4;
+		}
 		int line = i / 11;
 		EnemyClass enemy;
-		enemy.setPosition({(float)20 + (20 * (i - (line * 11))), (float)40 + (15 * line)});
+		switch (line) {
+		case 0:
+			enemy.type = 2;
+			break;
+		case 1:
+			enemy.type = 1;
+			break;
+		case 2:
+			enemy.type = 1;
+			break;
+		}
+		enemy.setPosition({ (float)10 + (20 * (i - (line * 11))), (float)30 + (15 * line) + (10 * clampedWaves) });
 		enemy.Initialize();
 		enemies.push_back(enemy);
 	}
@@ -72,9 +99,71 @@ void GameManager::Destroy()
 
 }
 
+void GameManager::OnTimerFinish() {
+	float furthest = 0, closest = gameWidth;
+	float lowest = 0;
+	bool moveDown = false;
+	for (size_t i = 0; i < enemies.size(); i++)
+	{
+		Vector2 newPos = enemies[i].GetPosition();
+		if (newPos.x > furthest) {
+			furthest = newPos.x;
+		}
+		if (newPos.x < closest) {
+			closest = newPos.x;
+		}
+		if (newPos.y > lowest) {
+			lowest = newPos.y;
+		}
+	}
+	if (!oppositeDirection && furthest >= 268) {
+		moveDown = true;
+		oppositeDirection = !oppositeDirection;
+	}
+
+	if (oppositeDirection && closest <= -4) {
+		moveDown = true;
+		oppositeDirection = !oppositeDirection;
+	}
+	for (size_t i = 0; i < enemies.size(); i++)
+	{
+		Vector2 newPos = enemies[i].GetPosition();
+		if (!moveDown)
+		{
+			newPos.x += 4 * ((oppositeDirection) ? -1 : 1);
+		}
+		else
+		{
+			newPos.y += 5;
+		}
+		enemies[i].setPosition(newPos);
+		enemies[i].UpdateSprite();
+	}
+	int clampedWaves = waves;
+	if (clampedWaves > 4) {
+		clampedWaves = 4;
+	}
+	timer = 30 - (3 * clampedWaves);
+}
+
 void GameManager::Update(float deltaTime)
 {
 	// BEGIN UPDATE // 
+
+	if (timer > 0 && !player.hit) {
+		timer -= deltaTime;
+		timerActive = true;
+	}else if (timer <= 0 && timerActive) {
+		OnTimerFinish();
+		timerActive = false;
+	}
+
+	if (enemies.size() == 0) {
+		cout << "WAVE FINISHED" << endl;
+		lives++;
+		waves++;
+		SpawnEnemies();
+	}
 
 	if (IsKeyDown(KEY_ENTER)) {
 		ToggleFullscreen();

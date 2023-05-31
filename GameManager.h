@@ -17,7 +17,7 @@ public:
 	void Start();
 	void DestroyBullet(int index);
 
-	Vector2 startPos = {200, 225};
+	Vector2 startPos = { 200, 225 };
 	PlayerSprite player;
 	Camera2D camera;
 	bool game_running;
@@ -28,6 +28,8 @@ public:
 private:
 	void Update(float deltaTime);
 	void Draw();
+	void OnTimerFinish();
+	void SpawnEnemies();
 
 	void Initialize();
 	void Destroy();
@@ -36,4 +38,8 @@ private:
 	int gameWidth = 550, gameHeight = 475;
 	int score = 0;
 	int lives = 3;
+	int timer = 20;
+	int waves = 0;
+	bool timerActive = false;
+	bool oppositeDirection;
 };

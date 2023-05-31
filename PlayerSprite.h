@@ -20,6 +20,6 @@ private:
 	Texture texture;
 	Vector2 position;
 	Rectangle frameRec;
-	float force = 150;
+	float force = 80;
 };
 
